@@ -20,22 +20,34 @@ class WorkersCards extends Component {
         super();
         this.state = {
         Name:'אחמד שרבאתי',
-        description:'ראש צוות'
+        role:'ראש צוות', 
+        status:false,
         };
     }
     componentDidMount(){
         $("Button").click(function(){
-            return <Link to="/details"/>
+            return <Link to="www.google.com"/>
         })
 
              var database = firebase.database();
-             const rootRef = database.ref().child('xTCz7SbvtqoQKrScqS30');
-             const nameRef= rootRef.child('Name');
-             nameRef.on('value', snap => {
-                this.setState({
-                    Name:snap.val()
-                })
-           });
+             const rootRef = database.ref().child('workers');
+        //      const rootRef = database.ref().child('workers').child("xTCz7SbvtqoQKrScqS30");
+        //      const nameRef= rootRef.child('Name');
+        //      nameRef.on('value', snap => {
+        //         this.setState({
+        //             Name:snap.val(),
+        //             role:snap.val()
+        //         })
+        //    });
+            rootRef.on("value", function(snapshot) {
+                console.log(snapshot.val());
+                for(var i=0;i<5;i++){
+                    console.log(snapshot.val[i])
+                }
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+           console.log(this.state.Name);
     }
 
 
@@ -59,7 +71,7 @@ class WorkersCards extends Component {
                             {this.state.Name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                        <h2>{this.state.description}</h2>
+                        <h2>{this.state.role}</h2>
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -186,7 +198,7 @@ class WorkersCards extends Component {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary" style={{border:'20px'}}>
-                        <Link to="/details">Show More</Link>
+                        Go to Google !
                     </Button>
                 </CardActions>
             </Card>
@@ -194,6 +206,7 @@ class WorkersCards extends Component {
         )} />
         <Route exact path="/details" component={WorkerDetails} />
         </div>
+       
     </Router> 
     
   );

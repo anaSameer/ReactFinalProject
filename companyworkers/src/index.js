@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
    var config = {
     apiKey: "AIzaSyBIRURbPeKTvTXkiNnvfp55rCXLPYX1iiE",
     authDomain: "react-final-project-bd305.firebaseapp.com",
-    databaseURL: "https://react-final-project-bd305.firebaseapp.com",
+    databaseURL: "https://react-final-project-bd305.firebaseio.com",
     storageBucket: "react-final-project-bd305.appspot.com"
   };
   firebase.initializeApp(config);
