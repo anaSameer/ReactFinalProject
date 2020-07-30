@@ -14,14 +14,14 @@ import * as firebase from 'firebase';
 
 
 
+
+
 class WorkersCards extends Component {
 
     constructor() {
         super();
         this.state = {
-        Name:'אחמד שרבאתי',
-        role:'ראש צוות', 
-        status:false,
+        names : []
         };
     }
     componentDidMount(){
@@ -31,116 +31,89 @@ class WorkersCards extends Component {
 
              var database = firebase.database();
              const rootRef = database.ref().child('workers');
-        //      const rootRef = database.ref().child('workers').child("xTCz7SbvtqoQKrScqS30");
-        //      const nameRef= rootRef.child('Name');
-        //      nameRef.on('value', snap => {
-        //         this.setState({
-        //             Name:snap.val(),
-        //             role:snap.val()
-        //         })
-        //    });
+             
             rootRef.on("value", function(snapshot) {
+                const nameList = this.state.names;
                 console.log(snapshot.val());
+                //this.state = snapshot.val();
                 for(var i=0;i<5;i++){
                     console.log(snapshot.val[i])
+                    nameList.append({
+                        name : snapshot.val()[i].Name
+                    });
+                    this.setState({
+                        names: nameList
+                    });
                 }
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
            console.log(this.state.Name);
+
+        
     }
+  
+  
 
 
    render() {
+       const items = []
+       for(var i=0; i <5;i++){
+           items.push(
+            <Card style={{maxWidth:'355px'}}>
+            <CardActionArea>
+                <CardMedia
+                component="img"
+                alt="Contemplative Reptile"
+                height="auto"
+                image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
+                title="Contemplative Reptile"
+                />
+                <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+                {this.state.Name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            <h2>{this.state.role}</h2>
+            </Typography>
+        </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary" style={{border:'20px'}}>
+                    Go to Google !
+                </Button>
+            </CardActions>
+        </Card>
+
+            
+           )
+       }
    return (
     <Router>  
         <div className="row">
         <Route exact path="/" render={props => (
             <React.Fragment>
-                <Card style={{maxWidth:'355px'}}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
-                    title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.state.Name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                        <h2>{this.state.role}</h2>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary" style={{border:'20px'}}>
-                        <Link to="/details">Show More</Link>
-                    </Button>
-                </CardActions>
-            </Card>
+                
+                    {items[0]}
+                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
 
         <Route exact path="/" render={props => (
             <React.Fragment>
-                <Card style={{maxWidth:'355px'}}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
-                    title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.state.Name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                        <h2>{this.state.description}</h2>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary" style={{border:'20px'}}>
-                        <Link to="/details">Show More</Link>
-                    </Button>
-                </CardActions>
-            </Card>
+                
+                    {items[1]}
+                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
 
         <Route exact path="/" render={props => (
             <React.Fragment>
-                <Card style={{maxWidth:'355px'}}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
-                    title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.state.Name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                        <h2>{this.state.description}</h2>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary" style={{border:'20px'}}>
-                        <Link to="/details">Show More</Link>
-                    </Button>
-                </CardActions>
-            </Card>
+                
+                    {items[2]}
+                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
@@ -148,60 +121,18 @@ class WorkersCards extends Component {
         <div className="row">
         <Route exact path="/" render={props => (
             <React.Fragment>
-                <Card style={{maxWidth:'355px'}}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
-                    title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.state.Name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                        <h2>{this.state.description}</h2>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary" style={{border:'20px'}}>
-                        <Link to="/details">Show More</Link>
-                    </Button>
-                </CardActions>
-            </Card>
+                
+                    {items[3]}
+                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
 
         <Route exact path="/" render={props => (
             <React.Fragment>
-                <Card style={{maxWidth:'355px'}}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="auto"
-                    image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
-                    title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {this.state.Name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            <h2>{this.state.description}</h2>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary" style={{border:'20px'}}>
-                        Go to Google !
-                    </Button>
-                </CardActions>
-            </Card>
+               
+                    {items[4]}
+                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
