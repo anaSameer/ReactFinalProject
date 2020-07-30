@@ -20,35 +20,52 @@ class WorkersCards extends Component {
 
     constructor() {
         super();
+        
         this.state = {
-        names : []
+        workers : [{
+            name:'',
+            role:'',
+            age:'',
+            department:'',
+            image:''
+        }], 
         };
+        
     }
     componentDidMount(){
         $("Button").click(function(){
-            return <Link to="www.google.com"/>
+            return <WorkerDetails/>
         })
-
+       
              var database = firebase.database();
              const rootRef = database.ref().child('workers');
              
-            rootRef.on("value", function(snapshot) {
-                const nameList = this.state.names;
-                console.log(snapshot.val());
+            rootRef.on("value", (snapshot) => {
+                let nameList = [];
                 //this.state = snapshot.val();
-                for(var i=0;i<5;i++){
+                for(var i=1;i<6;i++){
                     console.log(snapshot.val[i])
-                    nameList.append({
-                        name : snapshot.val()[i].Name
-                    });
-                    this.setState({
-                        names: nameList
+                    nameList.push({
+                        name : snapshot.val()[i].Name,
+                        age  : snapshot.val()[i].Age,
+                        department : snapshot.val()[i].Department,
+                        image : snapshot.val()[i].Image,
+                        role : snapshot.val()[i].Role
                     });
                 }
+                // this.setState({
+                //     ...this.state, names:nameList
+                // });
+                this.setState({ workers: nameList }, 
+                    ()=>{console.log(this.state.names)}
+                );
+                //console.log(nameList)
+                console.log(this.state.names)
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
-            });
-           console.log(this.state.Name);
+            }
+            );
+           
 
         
     }
@@ -58,20 +75,24 @@ class WorkersCards extends Component {
 
    render() {
        const items = []
-       for(var i=0; i <5;i++){
+       console.log(items.length)
+        var pass = false
+       for(var i=0; i <this.state.workers.length;i++){
            items.push(
+              <div> 
             <Card style={{maxWidth:'355px'}}>
             <CardActionArea>
                 <CardMedia
                 component="img"
                 alt="Contemplative Reptile"
                 height="auto"
-                image="https://i.ibb.co/6cSrrcR/29804756-e4ba-4b07-b310-b226962c60f7.jpg"
+                width="auto"
+                image={this.state.workers[i].image}
                 title="Contemplative Reptile"
                 />
                 <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-                {this.state.Name}
+                {this.state.workers[i].name}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
             <h2>{this.state.role}</h2>
@@ -80,12 +101,13 @@ class WorkersCards extends Component {
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary" style={{border:'20px'}}>
-                    Go to Google !
+                    <Link to="/details">Go to there</Link>
                 </Button>
             </CardActions>
         </Card>
 
-            
+        {pass ? <WorkerDetails className="worker_details" name={this.state.workers[i].age}/> :null}
+        </div>    
            )
        }
    return (
@@ -95,7 +117,6 @@ class WorkersCards extends Component {
             <React.Fragment>
                 
                     {items[0]}
-                
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
@@ -126,7 +147,7 @@ class WorkersCards extends Component {
                 
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} />
+        <Route exact path="/details" component={WorkerDetails} name="ANASSS"/>
 
         <Route exact path="/" render={props => (
             <React.Fragment>
@@ -136,6 +157,7 @@ class WorkersCards extends Component {
             </React.Fragment>
         )} />
         <Route exact path="/details" component={WorkerDetails} />
+        
         </div>
        
     </Router> 
