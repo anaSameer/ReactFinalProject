@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import $ from 'jquery'
 import Typography from '@material-ui/core/Typography';
-import WorkerDetails from './WorkerDetails'
+import {WorkerDetails} from './WorkerDetails'
 import * as firebase from 'firebase';
 
 
@@ -100,13 +100,12 @@ class WorkersCards extends Component {
         </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" style={{border:'20px'}}>
-                    <Link to="/details">Go to there</Link>
-                </Button>
+                
+                    <Link id={i} to={"/details/"+ i}>Go to there</Link>
+                
             </CardActions>
         </Card>
 
-        {pass ? <WorkerDetails className="worker_details" name={this.state.workers[i].age}/> :null}
         </div>    
            )
        }
@@ -117,49 +116,50 @@ class WorkersCards extends Component {
             <React.Fragment>
                 
                     {items[0]}
+
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} />
+        
 
         <Route exact path="/" render={props => (
             <React.Fragment>
                 
                     {items[1]}
-                
+
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} />
+        
 
         <Route exact path="/" render={props => (
             <React.Fragment>
                 
                     {items[2]}
-                
+
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} />
+        
         </div>
         <div className="row">
         <Route exact path="/" render={props => (
             <React.Fragment>
                 
                     {items[3]}
-                
+
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} name="ANASSS"/>
+        
 
         <Route exact path="/" render={props => (
             <React.Fragment>
                
                     {items[4]}
-                
+
             </React.Fragment>
         )} />
-        <Route exact path="/details" component={WorkerDetails} />
+        
         
         </div>
-       
+        <Route exact path="/details/:id" component={WorkerDetails} />
     </Router> 
     
   );
