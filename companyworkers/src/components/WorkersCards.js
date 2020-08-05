@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 //import CardContent from '@material-ui/core/CardContent';
 //import CardMedia from '@material-ui/core/CardMedia';
 import {BrowserRouter as Router, Route} from 'react-router-dom'; 
-import {Link} from 'react-router-dom'
+//import {Link} from 'react-router-dom'
 //import { Button } from "@material-ui/core";
 import $ from 'jquery'
 //import Typography from '@material-ui/core/Typography';
@@ -20,8 +20,8 @@ import {Card, Button} from 'react-bootstrap';
 class WorkersCards extends Component {
 
     constructor() {
-        super();
         
+        super();
         this.state = {
         workers : [{
             name:'',
@@ -29,22 +29,19 @@ class WorkersCards extends Component {
             age:'',
             department:'',
             image:''
-        }], 
+        }],
         };
-        
+
     }
-    componentDidMount(){
+     async componentDidMount(){
         
-        $(this.refs.btn).click(
-            function (){
-                window.location.href= `/details/${this.id}`;
-                return false         
-        })
-       
+        
+
+        
              var database = firebase.database();
              const rootRef = database.ref().child('workers');
-             
-            rootRef.on("value", (snapshot) => {
+             var t = this;
+             await rootRef.on("value", (snapshot) => {
                 let nameList = [];
                 for(var i=1;i<6;i++){
                     console.log(snapshot.val()[i])
@@ -55,34 +52,45 @@ class WorkersCards extends Component {
                         image : snapshot.val()[i].Image,
                         role : snapshot.val()[i].Role
                     });
+                    t.setState({ ...this.state, workers: nameList }, 
+                        ()=>{console.log(this.state.names)}
+    
+                    );
                 }
+                /*
                 this.setState({ ...this.state, workers: nameList }, 
                     ()=>{console.log(this.state.names)}
+
                 );
-                console.log(this.state.names)
+                */
+                console.log(this.state.workers)
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             }
             );
-           
-
-        
+            
     }
   
-  
+    componentDidUpdate(){
+        $(this.refs.btn).click(
+            function (){
+                window.location.href= `/details/${this.id}`;            
+            });
+    }
 
 
    render() {
        const items = []
        console.log(items.length)
+       
        for(var i=0; i <this.state.workers.length;i++){
            items.push(
               <div> 
-            <Card >
-            <Card.Img  variant= "top" bsPrefix='card-img' src={this.state.workers[i].image}/>
+            <Card style={{height:"500px"}}>
+            <Card.Img style={{maxHeight:'400px'}} variant= "top" bsPrefix='card-img' src={this.state.workers[i].image}/>
             <Card.Body>
                 <Card.Title>{this.state.workers[i].name}</Card.Title>
-            <Button ref="btn" id={i} style={{textAlign:'center'}}>
+            <Button className="button" ref={"btn"} id={i} style={{textAlign:'center'}}>
                 לעוד פרטים
             </Button>
             </Card.Body>
@@ -92,6 +100,7 @@ class WorkersCards extends Component {
         </div>    
            )
        }
+       
    return (
     <Layout>
     <Router>  
@@ -149,6 +158,7 @@ class WorkersCards extends Component {
   );
 
    }
+   
  }
 export default WorkersCards;
 
