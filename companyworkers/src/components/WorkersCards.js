@@ -33,8 +33,8 @@ class WorkersCards extends Component {
         
     }
     componentDidMount(){
-        $("Button").click(function(){
-            return <WorkerDetails/>
+        $("Button").click( () => {
+            return <WorkerDetails />         
         })
        
              var database = firebase.database();
@@ -42,9 +42,8 @@ class WorkersCards extends Component {
              
             rootRef.on("value", (snapshot) => {
                 let nameList = [];
-                //this.state = snapshot.val();
                 for(var i=1;i<6;i++){
-                    console.log(snapshot.val[i])
+                    console.log(snapshot.val()[i])
                     nameList.push({
                         name : snapshot.val()[i].Name,
                         age  : snapshot.val()[i].Age,
@@ -53,13 +52,9 @@ class WorkersCards extends Component {
                         role : snapshot.val()[i].Role
                     });
                 }
-                // this.setState({
-                //     ...this.state, names:nameList
-                // });
-                this.setState({ workers: nameList }, 
+                this.setState({ ...this.state, workers: nameList }, 
                     ()=>{console.log(this.state.names)}
                 );
-                //console.log(nameList)
                 console.log(this.state.names)
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
@@ -76,7 +71,6 @@ class WorkersCards extends Component {
    render() {
        const items = []
        console.log(items.length)
-        var pass = false
        for(var i=0; i <this.state.workers.length;i++){
            items.push(
               <div> 
@@ -100,9 +94,10 @@ class WorkersCards extends Component {
         </CardContent>
             </CardActionArea>
             <CardActions>
-                
-                    <Link id={i} to={"/details/"+ i}>Go to there</Link>
-                
+            <Button size="small" color="primary" style={{border:'20px'}} >
+                    <Link id={i} to={"/details/"+ i}>לעוד פרטים</Link>
+                    {/* {this.state.pass ? <WorkerDetails name={this.state.workers[i].name}/> : null} */}
+            </Button>   
             </CardActions>
         </Card>
 
