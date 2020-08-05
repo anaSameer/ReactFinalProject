@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { Layout } from './Layout';
 
 export class WorkerDetails extends React.Component{
 
@@ -44,6 +45,7 @@ export class WorkerDetails extends React.Component{
     render(){
         return(
             <div> 
+            <Layout>
             <Card style={{maxWidth:'355px'}}>
             <CardActionArea>
                 <CardMedia
@@ -68,7 +70,7 @@ export class WorkerDetails extends React.Component{
             <CardActions> 
             </CardActions>
         </Card>
-
+        </Layout>
         </div>    
         );
     }

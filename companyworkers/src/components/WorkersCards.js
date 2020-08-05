@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+//import Card from '@material-ui/core/Card';
+//import CardActionArea from '@material-ui/core/CardActionArea';
+//import CardActions from '@material-ui/core/CardActions';
+//import CardContent from '@material-ui/core/CardContent';
+//import CardMedia from '@material-ui/core/CardMedia';
 import {BrowserRouter as Router, Route} from 'react-router-dom'; 
 import {Link} from 'react-router-dom'
-import { Button } from "@material-ui/core";
+//import { Button } from "@material-ui/core";
 import $ from 'jquery'
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import {WorkerDetails} from './WorkerDetails'
 import * as firebase from 'firebase';
-
+import {Layout} from './Layout';
+import {Card, Button} from 'react-bootstrap';
 
 
 
@@ -33,8 +34,11 @@ class WorkersCards extends Component {
         
     }
     componentDidMount(){
-        $("Button").click( () => {
-            return <WorkerDetails />         
+        
+        $(this.refs.btn).click(
+            function (){
+                window.location.href= `/details/${this.id}`;
+                return false         
         })
        
              var database = firebase.database();
@@ -74,37 +78,22 @@ class WorkersCards extends Component {
        for(var i=0; i <this.state.workers.length;i++){
            items.push(
               <div> 
-            <Card style={{maxWidth:'355px'}}>
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                alt="Contemplative Reptile"
-                height="auto"
-                width="auto"
-                image={this.state.workers[i].image}
-                title="Contemplative Reptile"
-                />
-                <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-                {this.state.workers[i].name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-            <h2>{this.state.role}</h2>
-            </Typography>
-        </CardContent>
-            </CardActionArea>
-            <CardActions>
-            <Button size="small" color="primary" style={{border:'20px'}} >
-                    <Link id={i} to={"/details/"+ i}>לעוד פרטים</Link>
-                    {/* {this.state.pass ? <WorkerDetails name={this.state.workers[i].name}/> : null} */}
-            </Button>   
-            </CardActions>
+            <Card >
+            <Card.Img  variant= "top" bsPrefix='card-img' src={this.state.workers[i].image}/>
+            <Card.Body>
+                <Card.Title>{this.state.workers[i].name}</Card.Title>
+            <Button ref="btn" id={i} style={{textAlign:'center'}}>
+                לעוד פרטים
+            </Button>
+            </Card.Body>
+           
         </Card>
 
         </div>    
            )
        }
    return (
+    <Layout>
     <Router>  
         <div className="row">
         <Route exact path="/" render={props => (
@@ -133,8 +122,7 @@ class WorkersCards extends Component {
             </React.Fragment>
         )} />
         
-        </div>
-        <div className="row">
+        
         <Route exact path="/" render={props => (
             <React.Fragment>
                 
@@ -156,6 +144,7 @@ class WorkersCards extends Component {
         </div>
         <Route exact path="/details/:id" component={WorkerDetails} />
     </Router> 
+    </Layout>
     
   );
 
