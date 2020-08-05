@@ -43,3 +43,15 @@
   grid-template-columns: 30% 30% 30%;
 }
 
+.data {
+  margin-left: 30%;
+  text-align: center;
+}
+
+.worker_card {
+  height:100%;
+}
+
+.worker_img{
+  height: 400px;
+}

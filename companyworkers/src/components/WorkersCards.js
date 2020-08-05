@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-//import Card from '@material-ui/core/Card';
-//import CardActionArea from '@material-ui/core/CardActionArea';
-//import CardActions from '@material-ui/core/CardActions';
-//import CardContent from '@material-ui/core/CardContent';
-//import CardMedia from '@material-ui/core/CardMedia';
 import {BrowserRouter as Router, Route} from 'react-router-dom'; 
-//import {Link} from 'react-router-dom'
-//import { Button } from "@material-ui/core";
 import $ from 'jquery'
-//import Typography from '@material-ui/core/Typography';
 import {WorkerDetails} from './WorkerDetails'
 import * as firebase from 'firebase';
 import {Layout} from './Layout';
@@ -57,12 +49,6 @@ class WorkersCards extends Component {
     
                     );
                 }
-                /*
-                this.setState({ ...this.state, workers: nameList }, 
-                    ()=>{console.log(this.state.names)}
-
-                );
-                */
                 console.log(this.state.workers)
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
@@ -86,8 +72,8 @@ class WorkersCards extends Component {
        for(var i=0; i <this.state.workers.length;i++){
            items.push(
               <div> 
-            <Card style={{height:"500px"}}>
-            <Card.Img style={{maxHeight:'400px'}} variant= "top" bsPrefix='card-img' src={this.state.workers[i].image}/>
+            <Card className="worker_card">
+            <Card.Img className="worker_img" variant= "top" bsPrefix='card-img' src={this.state.workers[i].image}/>
             <Card.Body>
                 <Card.Title>{this.state.workers[i].name}</Card.Title>
             <Button className="button" ref={"btn"} id={i} style={{textAlign:'center'}}>
@@ -131,7 +117,8 @@ class WorkersCards extends Component {
             </React.Fragment>
         )} />
         
-        
+        </div>
+        <div className="row">
         <Route exact path="/" render={props => (
             <React.Fragment>
                 

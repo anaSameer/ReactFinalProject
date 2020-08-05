@@ -44,7 +44,7 @@ export class WorkerDetails extends React.Component{
 
     render(){
         return(
-            <div> 
+            <div className="data"> 
             <Layout>
             <Card style={{maxWidth:'355px'}}>
             <CardActionArea>
@@ -58,12 +58,12 @@ export class WorkerDetails extends React.Component{
                 />
                 <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-             <h1>{this.state.name}</h1>   
+             <h1>שם: {this.state.name}</h1>   
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-            <h2>{this.state.age}</h2>
-            <h2>{this.state.role}</h2>
-            <h2>{this.state.department}</h2>
+            <h2>גיל: {this.state.age}</h2>
+            <h2>תפקיד: {this.state.role}</h2>
+            <h2>מחלקה: {this.state.department}</h2>
             </Typography>
         </CardContent>
             </CardActionArea>
