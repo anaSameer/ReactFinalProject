@@ -38,7 +38,7 @@
 }
 
 .row {
-  margin: 15px;
+  margin-left: 15px;
   display: grid;
   grid-template-columns: 30% 30% 30%;
 }
@@ -50,8 +50,17 @@
 
 .worker_card {
   height:100%;
+  margin: 15px;
 }
 
 .worker_img{
   height: 400px;
+}
+
+.header {
+  margin-top:10px;
+  background-color: #F1F1F1;
+  text-align: center;
+  padding: 20px;
+  font-weight: 600;
 }

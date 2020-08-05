@@ -89,6 +89,7 @@ class WorkersCards extends Component {
        
    return (
     <Layout>
+    <h1 className="header">פרויקט ניהול עובדים בחברה</h1>
     <Router>  
         <div className="row">
         <Route exact path="/" render={props => (
