@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'; 
 import $ from 'jquery'
 import {WorkerDetails} from './WorkerDetails'
-import * as firebase from 'firebase';
 import {Layout} from './Layout';
 import {Card, Button} from 'react-bootstrap';
-
+import firebase, {config_fire} from './Firebase';
 
 
 
@@ -30,7 +29,14 @@ class WorkersCards extends Component {
         
         
 
-        
+        try{
+            await firebase.app().delete();
+            await firebase.initializeApp(config_fire);
+        } catch(err){
+            if (!/already exists/.test(err.message)) {
+                console.error('Firebase initialization error raised', err.stack)
+                }
+        }
              var database = firebase.database();
              const rootRef = database.ref().child('workers');
              var t = this;

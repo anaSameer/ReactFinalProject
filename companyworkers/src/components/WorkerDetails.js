@@ -1,5 +1,4 @@
 import React from 'react'
-import * as firebase from 'firebase';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Layout } from './Layout';
+import firebase, {config_fire} from './Firebase';
 
 export class WorkerDetails extends React.Component{
 
@@ -22,9 +22,20 @@ export class WorkerDetails extends React.Component{
         };
     }
 
-    componentDidMount(){
+    async componentDidMount(){
 
         let id = (Number(this.props.match.params.id) + Number(1));
+        
+        try{
+            await firebase.app().delete();
+            await firebase.initializeApp(config_fire);
+        } catch(err){
+            if (!/already exists/.test(err.message)) {
+                console.error('Firebase initialization error raised', err.stack)
+                }
+        }
+        // await firebase.app().delete();
+        // await firebase.initializeApp(config_fire);
         var database = firebase.database();
         const rootRef = database.ref().child('workers');
         
