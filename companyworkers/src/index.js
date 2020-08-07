@@ -15,9 +15,7 @@ import * as firebase from 'firebase';
   };
   firebase.initializeApp(config);
 
-  // Get a reference to the database service
-   //var database = firebase.database();
-  // firebase.initializeApp(config);
+  
 
 ReactDOM.render(
   <React.StrictMode>

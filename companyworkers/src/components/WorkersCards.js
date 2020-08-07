@@ -25,7 +25,8 @@ class WorkersCards extends Component {
         };
 
     }
-     async componentDidMount(){
+     
+    async componentDidMount(){
         
         
 
